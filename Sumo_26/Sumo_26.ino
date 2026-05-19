@@ -10,8 +10,8 @@
 
 // --- Pin Motor B ---
 #define PWMB  10  // PWM kecepatan motor B
-#define BIN1  6   // Arah motor B - input 1
-#define BIN2  7   // Arah motor B - input 2
+#define BIN1  7   // Arah motor B - input 1
+#define BIN2  6   // Arah motor B - input 2
 
 // --- Pin Standby ---
 #define STBY  8   // Standby TB6612FNG (HIGH = aktif, LOW = sleep)
@@ -80,7 +80,7 @@ void motorA_rem() {
 
 // =============================================
 // Fungsi Motor B
-// =============================================
+// =============================================  analogWrite(pwm2, 0);
 void motorB_maju(int kecepatan) {
   digitalWrite(BIN1, HIGH);
   digitalWrite(BIN2, LOW);
@@ -150,14 +150,14 @@ void belok_kiri_2(int kecepatan) {
 
 void belok_kanan_3(int kecepatan) {
   Serial.println(">> BELOK KANAN");
-  motorA_mundur();   // Motor A lebih cepat
+  motorA_mundur(kecepatan);   // Motor A lebih cepat
   motorB_maju(kecepatan); // Motor B lebih lambat
 }
 
 void belok_kiri_3(int kecepatan) {
   Serial.println(">> BELOK KIRI");
   motorA_maju(kecepatan); // Motor A lebih lambat
-  motorB_mundur();     // Motor B lebih cepat
+  motorB_mundur(kecepatan);     // Motor B lebih cepat
 }
 
 void putar_kanan(int kecepatan) {
@@ -193,20 +193,23 @@ void loop() {
 
   // Maju penuh 2 detik
   maju(200);
+  delay(3000);
+  maju(100);
+  delay(3000);
   // delay(2000);
 
   // berhenti();
   // delay(500);
 
   // Mundur 1.5 detik
-  mundur(180);
+  // mundur(180);
   // delay(1500);
 
   // berhenti();
   // delay(500);
 
   // // Belok kanan 1 detik
-  belok_kanan(200);
+  // belok_kanan(200);
   // delay(1000);
 
   // berhenti();
