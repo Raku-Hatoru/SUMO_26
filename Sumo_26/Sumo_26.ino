@@ -2,19 +2,30 @@
 // ESP32-C3 SuperMini + TB6612FNG Motor Driver
 // Kontrol 2 Motor DC (Motor A dan Motor B)
 // =============================================
-
+// ESP32-C3
 // --- Pin Motor A ---
-#define PWMA  0   // PWM kecepatan motor A
-#define AIN1  3   // Arah motor A - input 1
-#define AIN2  1   // Arah motor A - input 2
+// #define PWMA  0   // PWM kecepatan motor A  0
+// #define AIN1  3   // Arah motor A - input 1 3
+// #define AIN2  1   // Arah motor A - input 2 1
+// 
+// --- Pin Motor B ---
+// #define PWMB  10  // PWM kecepatan motor B  10
+// #define BIN1  7   // Arah motor B - input 1 7
+// #define BIN2  6   // Arah motor B - input 2 6
+ 
+// --- Pin Motor A ---
+#define PWMA  32   // PWM kecepatan motor A  0
+#define AIN1  25   // Arah motor A - input 1 3
+#define AIN2  33   // Arah motor A - input 2 1
 
 // --- Pin Motor B ---
-#define PWMB  10  // PWM kecepatan motor B
-#define BIN1  7   // Arah motor B - input 1
-#define BIN2  6   // Arah motor B - input 2
+#define PWMB  14  // PWM kecepatan motor B  10
+#define BIN1  26   // Arah motor B - input 1 7
+#define BIN2  27   // Arah motor B - input 2 6
+
 
 // --- Pin Standby ---
-#define STBY  8   // Standby TB6612FNG (HIGH = aktif, LOW = sleep)
+// #define STBY  8   // Standby TB6612FNG (HIGH = aktif, LOW = sleep)
 
 // --- Konfigurasi PWM (ESP32-C3 pakai ledcAttach) ---
 #define PWM_FREQ     1000   // Frekuensi PWM 1kHz
@@ -32,14 +43,14 @@ void setup() {
   pinMode(AIN2, OUTPUT);
   pinMode(BIN1, OUTPUT);
   pinMode(BIN2, OUTPUT);
-  pinMode(STBY, OUTPUT);
+  // pinMode(STBY, OUTPUT);
 
   // Setup PWM menggunakan API baru ESP32 Arduino (v3.x)
   ledcAttach(PWMA, PWM_FREQ, PWM_RESOLUTION);
   ledcAttach(PWMB, PWM_FREQ, PWM_RESOLUTION);
 
   // Aktifkan driver (keluar dari mode standby)
-  digitalWrite(STBY, HIGH);
+  // digitalWrite(STBY, HIGH);
 
   Serial.println("Motor driver siap!");
   delay(1000);
@@ -178,12 +189,12 @@ void berhenti() {
   motorB_berhenti();
 }
 
-void standby(bool aktif) {
-  // false = masuk mode sleep (hemat daya)
-  // true  = keluar dari sleep
-  digitalWrite(STBY, aktif ? HIGH : LOW);
-  Serial.printf("Driver mode: %s\n", aktif ? "AKTIF" : "SLEEP");
-}
+// void standby(bool aktif) {
+//   // false = masuk mode sleep (hemat daya)
+//   // true  = keluar dari sleep
+//   digitalWrite(STBY, aktif ? HIGH : LOW);
+//   Serial.printf("Driver mode: %s\n", aktif ? "AKTIF" : "SLEEP");
+// }
 
 // =============================================
 // Loop Utama - Demo Gerakan
