@@ -1,10 +1,10 @@
 #include <Ps3Controller.h>
-
+int player = 1;
 // =============================================
-// ESP32-C3 SuperMini + TB6612FNG Motor Driver
+// ESP32 DevKit Type-C + TB6612FNG Motor Driver
 // Kontrol 2 Motor DC (Motor A dan Motor B)
 // =============================================
-// ESP32-C3
+// ESP32 DevKit Type-C
 // --- Pin Motor A ---
 // #define PWMA  0   // PWM kecepatan motor A  0
 // #define AIN1  3   // Arah motor A - input 1 3
@@ -17,21 +17,23 @@
 
 // --- Pin Motor A ---
 #define PWMA 32  // PWM kecepatan motor A  0
-#define AIN1 25  // Arah motor A - input 1 3
-#define AIN2 33  // Arah motor A - input 2 1
+#define AIN1 33  // Arah motor A - input 1 3
+#define AIN2 25  // Arah motor A - input 2 1
 
 // --- Pin Motor B ---
 #define PWMB 14  // PWM kecepatan motor B  10
-#define BIN1 26  // Arah motor B - input 1 7
-#define BIN2 27  // Arah motor B - input 2 6
-
+#define BIN1 27  // Arah motor B - input 1 7
+#define BIN2 26  // Arah motor B - input 2 6
+int kecepatan = 200;
 // --- Pin Standby ---
 // #define STBY  8   // Standby TB6612FNG (HIGH = aktif, LOW = sleep)
 
-// --- Konfigurasi PWM (ESP32-C3 pakai ledcAttach) ---
+// --- Konfigurasi PWM (Arduino ESP32 core v3.x pakai ledcAttach) ---
 #define PWM_FREQ 1000     // Frekuensi PWM 1kHz
 #define PWM_RESOLUTION 8  // Resolusi 8-bit (0-255)
-
+void onConnect() {
+  Serial.println("Connected.");
+}
 // =============================================
 // Fungsi Setup
 // =============================================
@@ -39,7 +41,7 @@ void setup() {
   Serial.begin(115200);
   Ps3.attach(notify);
   Ps3.attachOnConnect(onConnect);
-  Ps3.begin("01:02:03:04:05:06");
+  Ps3.begin("12:22:33:44:55:66");
   // Inisialisasi pin arah sebagai OUTPUT
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
@@ -239,6 +241,7 @@ void notify() {
   //--------------- Digital D-pad button events --------------
   if (Ps3.event.button_down.up) {
     Serial.println("Started pressing the up button");
+    maju(kecepatan);
   }
   if (Ps3.event.button_up.up) {
     Serial.println("Released the up button");
@@ -247,6 +250,7 @@ void notify() {
 
   if (Ps3.event.button_down.right) {
     Serial.println("Started pressing the right button");
+    belok_kanan_2(kecepatan);
   }
   if (Ps3.event.button_up.right) {
     Serial.println("Released the right button");
@@ -255,6 +259,7 @@ void notify() {
 
   if (Ps3.event.button_down.down) {
     Serial.println("Started pressing the down button");
+    mundur(kecepatan);
   }
   if (Ps3.event.button_up.down) {
     Serial.println("Released the down button");
@@ -263,6 +268,7 @@ void notify() {
 
   if (Ps3.event.button_down.left) {
     Serial.println("Started pressing the left button");
+    belok_kiri_2(kecepatan);
   }
   if (Ps3.event.button_up.left) {
     Serial.println("Released the left button");
@@ -308,11 +314,11 @@ void notify() {
 // Loop Utama - Demo Gerakan
 // =============================================
 void loop() {
-  Serial.println("\n===== Demo Gerakan Robot =====");
+  // Serial.println("\n===== Demo Gerakan Robot =====");
   if (!Ps3.isConnected()) {
-    Serial.println("connect");
     return;
   }
+  Ps3.setPlayer(player);
 
   // Maju penuh 2 detik
   // maju(200);

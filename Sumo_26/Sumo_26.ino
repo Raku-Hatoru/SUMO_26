@@ -14,14 +14,14 @@
 // #define BIN2  6   // Arah motor B - input 2 6
  
 // --- Pin Motor A ---
-#define PWMA  32   // PWM kecepatan motor A  0
-#define AIN1  25   // Arah motor A - input 1 3
-#define AIN2  33   // Arah motor A - input 2 1
+#define PWMA 32  // PWM kecepatan motor A  0
+#define AIN1 33  // Arah motor A - input 1 3
+#define AIN2 25  // Arah motor A - input 2 1
 
 // --- Pin Motor B ---
-#define PWMB  14  // PWM kecepatan motor B  10
-#define BIN1  26   // Arah motor B - input 1 7
-#define BIN2  27   // Arah motor B - input 2 6
+#define PWMB 14  // PWM kecepatan motor B  10
+#define BIN1 27  // Arah motor B - input 1 7
+#define BIN2 26  // Arah motor B - input 2 6
 
 
 // --- Pin Standby ---
@@ -203,10 +203,10 @@ void loop() {
   Serial.println("\n===== Demo Gerakan Robot =====");
 
   // Maju penuh 2 detik
-  maju(200);
-  delay(3000);
-  maju(100);
-  delay(3000);
+  maju(255);
+  delay(1000);
+  mundur(255);
+  delay(1000);
   // delay(2000);
 
   // berhenti();
